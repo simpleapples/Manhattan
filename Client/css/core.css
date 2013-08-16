@@ -7,10 +7,11 @@
     -webkit-border-radius: 5px;
     position: relative;
     background: rgba(255, 255, 255, 0.4);
+    margin-left: 100px;
+    margin-top: 30px;
 }
 
 .online-list {
-    height: 141px;
 }
 
 .online-title {
@@ -22,6 +23,7 @@
 
 .message-container {
     height: 291px;
+    height: 400px;
     width: 100%;
     overflow: hidden;
 }
@@ -48,7 +50,6 @@ a.warn-msg {
     top: 448px;
     left: 0;
 }
-dfjdsfldsjd
 
 .interaction #msg {
     width: 150px;
@@ -73,23 +74,52 @@ dfjdsfldsjd
 .message-container .s-msg .photo img {
     width: 42px;
     height: 42px;
-    margin-left: 5px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+.s-msg {
+    margin: 20px 0;
 }
 
 .photo {
     display: inline-block;
+    margin-left: 5px;
     float: left;
+}
+
+.right { zoom: 1; }
+.right:after {
+    display: block;
+    content: 'clear';
+    clear: both;
+    line-height: 0;
+    visibility: hidden;
+}
+
+.right .photo {
+    float: right;
+    margin-left: 0;
+    margin-right: 5px;
 }
 
 .txt-container {
     border: 1px solid #EEEEEE;
     padding: 5px 10px;
     display: inline-block;
-    float: left;
-    min-width: 50px;
-    min-height: 20px;
+    min-width: 18px;
+    min-height: 32px;
     max-width: 140px;
-    margin-left: 60px;
+    margin-left: 10px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.right .txt-container {
+    margin-right: 10px;
+    margin-left: 0;
+    float: right;
 }
 
 .txt {

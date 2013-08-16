@@ -32,6 +32,18 @@
                     <div class="txt">
                         雅，老师这节课讲得真TM好！
                     </div>
+                    <b class="to"></b>
+                </div>
+            </div>
+            <div class="s-msg right">
+                <a class="photo" href="">
+                    <img src="./img/photo.jpg" alt="" />
+                </a>
+                <div class="txt-container">
+                    <div class="txt">
+                        好
+                    </div>
+                    <b class="to"></b>
                 </div>
             </div>
         </div>
@@ -63,15 +75,28 @@
         }
 
         function sendMsg(str) {
-            console.log(str);
-            container.innerHTML += str + "\n";
+            //console.log(str);
+            var str = insertMsg(str);
+            container.innerHTML += str;
             //container.appendChild("<p>" + str + "</p>");
             txt.value = "";
             txt.focus();
         }
 
         function insertMsg(str) {
+            var str = '<div class="s-msg">' +
+                        '<a class="photo" href="">' + 
+                            '<img src="./img/photo.jpg" alt="" />' + 
+                        '</a>' +
+                        '<div class="txt-container">' +
+                            '<div class="txt">' +
+                                str +
+                            '</div>' +
+                            '<b class="to"></b>' +
+                        '</div>' +
+                       '</div>';
 
+            return str;
         }
 
         // 链接服务器
