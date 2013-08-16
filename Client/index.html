@@ -5,6 +5,7 @@
     <title>Nebula回放客户端</title>
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/core.css" />
+    <script type="text/javascript" src="./js/serverservice.js"></script>
 </head>
 <body>
     <div class="container">
@@ -71,6 +72,22 @@
 
         function insertMsg(str) {
 
+        }
+
+        // 链接服务器
+        serverService.connect(connHandler, msgHandler, closeHandler);
+
+        function connHandler() {
+            serverService.send('{"type":"ONLI","uid":2323232}');
+            console.log("connected!");
+        }
+
+        function msgHandler() {
+            console.log("msg handler");
+        }
+
+        function closeHandler() {
+            console.log("close!");
         }
     </script>
 </body>
