@@ -2,9 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Nebula回放客户端</title>
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/core.css" />
 </head>
 <body>
-    <div>Nebula回放客户端</div>
+    <div class="container">
+        <div class="online-list">
+            <a href="javascipt:void(0);">
+                <span class="online-title">
+                    4人在线
+                </span>
+                <b class="arrow"></b>
+            </a>
+            <!--
+            <a class="warn-msg" href="javascript:void(0);">
+                <span class="warn-num">788</span>
+                提醒
+            </a>
+            -->
+        </div>
+        <div class="message-container">
+            <div class="s-msg">
+                <a class="photo" href="">
+                    <img src="./img/photo.jpg" alt="" />
+                </a>
+                <div class="txt-container">
+                    <div class="txt">
+                        雅，老师这节课讲得真TM好！
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="interaction">
+            <input type="text" placeholder="在这里输入文字，进行聊天" name="msg" id="msg">
+            <input type="button" value="发 送" id="send-btn" class="send">
+        </div>
+    </div>
+    <script type="text/javascript">
+        var $ = function(selector) {
+            return document.querySelector(selector);
+        };
+
+        var sendBtn = $("#send-btn"),
+            txt = $("#msg"),
+            container = $(".message-container"),
+            value = "";
+
+        sendBtn.onclick = function() {
+            sendMsg(txt.value);
+        }
+
+        txt.onkeydown = function(e) {
+            var keyCode = e.keyCode || e.which;
+
+            if (keyCode == 13) {
+                sendMsg(txt.value);
+            }
+        }
+
+        function sendMsg(str) {
+            console.log(str);
+            container.innerHTML += str + "\n";
+            //container.appendChild("<p>" + str + "</p>");
+            txt.value = "";
+            txt.focus();
+        }
+
+        function insertMsg(str) {
+
+        }
+    </script>
 </body>
 </html>

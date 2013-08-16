@@ -1,0 +1,97 @@
+.container {
+    height: 480px;
+    width: 230px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.online-list {
+    height: 141px;
+}
+
+.online-title {
+    display: inline-block;
+    font-size: 12px;
+    margin: 3px 5px;
+    float: left;
+}
+
+.message-container {
+    height: 291px;
+    width: 100%;
+    overflow: hidden;
+}
+
+/*
+a.warn-msg {
+    display: inline-block;
+    float: right;
+    text-decoration: none;
+    color: #666666;
+}
+
+.warn-num {
+    display: inline-block;
+    background: #FFA357;
+    padding: 1px 3px;
+}
+*/
+
+.interaction {
+    width: 100%;
+    height: 26px;
+    position: absolute;
+    top: 448px;
+    left: 0;
+}
+dfjdsfldsjd
+
+.interaction #msg {
+    width: 150px;
+    float: left;
+    margin-left: 4px;
+}
+
+.interaction .send {
+    background: #F49909;
+    width: 60px;
+    height: 100%;
+    font-size: 14px;
+    float: right;
+    margin-right: 4px;
+}
+
+.interaction .send:hover {
+    background: #FDAA24;
+}
+
+/*聊天信息头像显示*/
+.message-container .s-msg .photo img {
+    width: 42px;
+    height: 42px;
+    margin-left: 5px;
+}
+
+.photo {
+    display: inline-block;
+    float: left;
+}
+
+.txt-container {
+    border: 1px solid #EEEEEE;
+    padding: 3px 3px 3px 10px;
+    display: inline-block;
+    float: left;
+    min-width: 50px;
+    min-height: 20px;
+    max-width: 140px;
+    margin-left: 60px;
+}
+
+.txt {
+    font-size: 12px;
+}

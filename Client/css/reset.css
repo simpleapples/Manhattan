@@ -1,0 +1,123 @@
+/*
+ * 网站通用css
+ * */
+html,body{
+	font: normal 12px/1.5 Helvetica, Microsoft YaHei, sans-serif; 
+	height:101%;
+    color: #666;
+}
+/*reset.css*/
+body, div, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+form, input, button,
+img, textarea, p, th, td {
+    margin: 0;
+    padding: 0;
+}
+input, img, select, textarea {
+    vertical-align: middle;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    font-size: 12px;
+}
+ol, ul {
+    list-style: none;
+}
+a{
+	text-decoration:none;
+	color: #666;
+	outline: none;
+}
+a:active {star:expression_r(this.onFocus=this.blur());}
+a:focus { outline:0; }
+a:hover { text-decoration: underline; }
+:focus { outline: none; outline: 0; }
+:link, :visited, ins { text-decoration: none; }
+:active { outline: none; }
+::-moz-focus-inner { outline: none; }
+fieldset, img {
+    border: 0;
+}
+fieldset legend {
+    display: none;
+}
+.clearfix { zoom: 1; }
+.clearfix:after { clear: both; }
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+input[type=text], input[type=password] {
+	border: 1px solid #bbb;
+	height: 18px;
+    padding: 3px 0 3px 7px;
+    display: inline-block;
+	width: 100%;
+	color: #000;
+    font-size: 12px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    line-height: 18px;
+    _padding-top: 6px;
+}
+input[type=text]:focus, input[type=password]:focus {
+	outline: none;
+	color: #666;
+	border: 1px solid #77BACE;
+	-webkit-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+	-moz-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+	box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+}
+button{
+	margin: 0 auto;
+	width: 250px;
+}
+input[type=submit],input[type=reset],input[type=button]{
+    width: 100px;
+    margin: 0 0;
+    cursor: pointer;
+    height: 35px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 0;
+}
+select {
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+input[type=file] {
+    margin: 20px 0;
+}
+img {
+    vertical-align: middle;
+    border: 0;
+}
+.sticky { /* hack for ie */
+    position: fixed;
+    top: 0;
+}
+.arrow{
+    position: relative;
+    top: -2px;
+    left: 2px;
+    border-width: 3px 3px 0;
+    border-color: #666 transparent transparent transparent;
+    border-style: solid dashed dashed dashed;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: baseline;
+}
