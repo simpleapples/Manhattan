@@ -57,6 +57,10 @@
     </div>
 </div>
     <script type="text/javascript">
+        var idx = location.href.indexOf('?uid=');
+        // 用户id
+        var uid = (idx != -1) ? location.href.substring(idx + 5) : 0;
+        //console.log(uid);
         var $ = function(selector) {
             return document.querySelector(selector);
         };
@@ -80,7 +84,11 @@
 
         function sendMsg(str) {
             //console.log(str);
-            serverService.send('{"type":"CHAT","uid":2323232,"value":"'+str+'"}');
+            serverService.send('{"type":"CHAT","uid":"'+uid+'","value":"'+str+'"}');
+            chatHandler(str);
+        }
+
+        function chatHandler(str) {
             var str = insertMsg(str);
             container.innerHTML += str;
             //container.appendChild("<p>" + str + "</p>");
@@ -108,13 +116,28 @@
         serverService.connect(connHandler, msgHandler, closeHandler);
 
         function connHandler() {
-            serverService.send('{"type":"ONLI","uid":2323232}');
+            serverService.send('{"type":"ONLI","uid":'+uid+'}');
             console.log("connected!");
         }
 
-        function msgHandler(obj) {
+        function msgHandler(data) {
             //console.log("msg handler");
-            console.log(obj);
+            console.log(data);
+            var msg = JSON.parse(data) || {};
+
+            if (msg.uid != uid)  {
+                switch(msg.type) {
+                    case "ONLI":
+                        break;
+                    case "OFFL":
+                        break;
+                    case "CHAT":
+                        chatHandler(msg.value);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         function closeHandler() {
