@@ -29,8 +29,6 @@ wss.on('connection', function (conn) {
 
 		sendToAll(obj);
 
-		console.log(obj);
-
 	})
 
 	conn.on('error', function () {
@@ -61,7 +59,9 @@ wss.on('connection', function (conn) {
 	}
 
 	function sendToAll(obj) {
-
+		
+		console.log(obj);
+		
 		for (var i = wss.clients.length - 1; i >= 0; i--) {
 			wss.clients[i].send(obj);
 		};
