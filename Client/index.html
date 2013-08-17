@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="wrapper" class="clearfix"> 
-    <canvas id="ppt">
+    <canvas id="ppt" width="640" height="480">
     </canvas>
     <div class="chat-container">
         <div class="online-list">
@@ -88,12 +88,60 @@
             chatHandler(str);
         }
 
-        function chatHandler(str) {
-            var str = insertMsg(str);
+        function chatHandler(value) {
+            var str = insertMsg(value);
             container.innerHTML += str;
             //container.appendChild("<p>" + str + "</p>");
             txt.value = "";
             txt.focus();
+        }
+
+        var canvas = document.getElementById("ppt"),
+            context = canvas.getContext('2d'),
+            isDrawing = false,
+            canvasRect = canvas.getBoundingClientRect();
+
+        canvas.onmousedown = function (e) {
+            isDrawing = true;
+            context.beginPath();
+            context.strokeStyle = "red"; 
+            context.lineWidth = 2;
+            context.moveTo(e.pageX - canvasRect.left, e.pageY - canvasRect.top);
+            serverService.send('{"type":"DRMV", "uid":' + uid + ', "value":{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}}');
+            console.log("canvas down", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
+        }
+
+        canvas.onmouseup = function (e) {
+            isDrawing = false;
+            context.closePath();
+            console.log("canvas up", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
+        }
+
+        canvas.onmousemove = function (e) {
+            if (isDrawing) {
+                context.lineTo(e.pageX - canvasRect.left, e.pageY - canvasRect.top);
+                context.stroke();
+                serverService.send('{"type":"DRLI", "uid":' + uid + ', "value":{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}}');
+                console.log("canvas move", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
+            }
+        }
+
+        function drawLineHandler(x, y) {
+            context.lineTo(x, y);
+            context.stroke();
+            console.log("draw line handler", x, y);
+        }
+
+        function drawMoveHandler(x, y) {
+            context.beginPath();
+            context.strokeStyle = "red"; 
+            context.lineWidth = 2;
+            context.moveTo(x, y); 
+            console.log("draw move handler", x, y);
+        }
+
+        function drawCleanHandler() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
         }
 
         function insertMsg(str) {
@@ -133,6 +181,15 @@
                         break;
                     case "CHAT":
                         chatHandler(msg.value);
+                        break;
+                    case "DRLI":
+                        drawLineHandler(msg.value.x, msg.value.y);
+                        break;
+                    case "DRMV":
+                        drawMoveHandler(msg.value.x, msg.value.y);
+                        break;
+                    case "DRCL":
+                        drawCleanHandler();
                         break;
                     default:
                         break;
