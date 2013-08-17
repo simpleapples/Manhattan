@@ -1,4 +1,17 @@
-.container {
+#wrapper {
+    width: 890px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+#ppt {
+    width: 640px;
+    height: 480px;
+    float: left;
+}
+
+.chat-container {
     height: 480px;
     width: 230px;
     border: 1px solid #cccccc;
@@ -7,8 +20,9 @@
     -webkit-border-radius: 5px;
     position: relative;
     background: rgba(255, 255, 255, 0.4);
-    margin-left: 100px;
-    margin-top: 30px;
+    margin-left: 10px;
+    display: inline-block;
+    float: left;
 }
 
 .online-list {

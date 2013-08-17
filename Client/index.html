@@ -8,7 +8,10 @@
     <script type="text/javascript" src="./js/serverservice.js"></script>
 </head>
 <body>
-    <div class="container">
+<div id="wrapper" class="clearfix"> 
+    <canvas id="ppt">
+    </canvas>
+    <div class="chat-container">
         <div class="online-list">
             <a href="javascipt:void(0);">
                 <span class="online-title">
@@ -52,6 +55,7 @@
             <input type="button" value="发 送" id="send-btn" class="send">
         </div>
     </div>
+</div>
     <script type="text/javascript">
         var $ = function(selector) {
             return document.querySelector(selector);
@@ -76,6 +80,7 @@
 
         function sendMsg(str) {
             //console.log(str);
+            serverService.send('{"type":"CHAT","uid":2323232,"value":"'+str+'"}');
             var str = insertMsg(str);
             container.innerHTML += str;
             //container.appendChild("<p>" + str + "</p>");
@@ -107,8 +112,9 @@
             console.log("connected!");
         }
 
-        function msgHandler() {
-            console.log("msg handler");
+        function msgHandler(obj) {
+            //console.log("msg handler");
+            console.log(obj);
         }
 
         function closeHandler() {

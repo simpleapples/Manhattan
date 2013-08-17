@@ -1,4 +1,4 @@
-var url = 'ws://192.168.0.46:8000',
+var url = 'ws://106.187.96.242:8000',
     ws = new WebSocket(url),
     serverService = {
         connect : function (connHandler, msgHandler, closeHandler) {
@@ -7,8 +7,8 @@ var url = 'ws://192.168.0.46:8000',
                 connHandler();
             };
 
-            ws.onmessage = function () {
-                msgHandler();
+            ws.onmessage = function (msg) {
+                msgHandler(msg.data);
             }
 
             ws.onclose = function () {
