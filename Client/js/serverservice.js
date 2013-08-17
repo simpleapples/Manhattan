@@ -7,8 +7,8 @@ var url = 'ws://192.168.0.46:8000',
                 connHandler();
             };
 
-            ws.onmessage = function () {
-                msgHandler();
+            ws.onmessage = function (msg) {
+                msgHandler(msg);
             }
 
             ws.onclose = function () {
