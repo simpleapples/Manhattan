@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Nebula回放客户端</title>
+    <title>多贝HTML5实时客户端</title>
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/core.css" />
     <script type="text/javascript" src="./js/serverservice.js"></script>
@@ -84,7 +84,7 @@
 
         function sendMsg(str) {
             //console.log(str);
-            serverService.send('{"type":"CHAT","uid":"'+uid+'","value":"'+str+'"}');
+            serverService.send("CHAT", uid, str);
             chatHandler(str);
         }
 
@@ -107,21 +107,21 @@
             context.strokeStyle = "red"; 
             context.lineWidth = 2;
             context.moveTo(e.pageX - canvasRect.left, e.pageY - canvasRect.top);
-            serverService.send('{"type":"DRMV", "uid":' + uid + ', "value":{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}}');
+            serverService.send("DRMV", uid, '{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}');
             console.log("canvas down", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
         }
 
         canvas.onmouseup = function (e) {
             isDrawing = false;
             context.closePath();
-            console.log("canvas up", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
+            console.log("canvas up", e.pageX - canvasRect.left, e.pageY - canvasRect.top);			
         }
 
         canvas.onmousemove = function (e) {
             if (isDrawing) {
                 context.lineTo(e.pageX - canvasRect.left, e.pageY - canvasRect.top);
                 context.stroke();
-                serverService.send('{"type":"DRLI", "uid":' + uid + ', "value":{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}}');
+                serverService.send("DRLI", uid, '{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}');
                 console.log("canvas move", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
             }
         }
@@ -164,7 +164,7 @@
         serverService.connect(connHandler, msgHandler, closeHandler);
 
         function connHandler() {
-            serverService.send('{"type":"ONLI","uid":'+uid+'}');
+            serverService.send("ONLI", uid);
             console.log("connected!");
         }
 
