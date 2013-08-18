@@ -18,7 +18,11 @@ var url = 'ws://106.187.96.242:8000',
 		send : function (type, uid, value) {
 			var msg;
 			if (value) {
-				msg = '{"type":"' + type + '", "uid":' + uid + ', "value":' + value + '}';
+				if (value.charAt(0) === "{") {
+					msg = '{"type":"' + type + '", "uid":' + uid + ', "value":' + value + '}';
+				} else {
+					msg = '{"type":"' + type + '", "uid":' + uid + ', "value":"' + value + '"}';
+				}
 			} else {
 				msg = '{"type":"' + type + '", "uid":' + uid + '}';
 			}
