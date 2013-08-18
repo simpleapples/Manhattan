@@ -1,17 +1,14 @@
 #接口文档
 
 ##接口文件
----
 **serverservice.js**
 
 ##接口方法
----
 	connect();
 	
 	send(type, uid, value);
 	
 ##send方法
----
 
 ###方法类型
 - ONLI 客户端上线
