@@ -1,16 +1,15 @@
-var http = require('http');
-var app = http.createServer().listen(8000);
-var WebSocketServer = require('ws').Server;
-var wss = new WebSocketServer({server:app});
-
-var userList = {}
+var http = require('http'),
+	app = http.createServer().listen(8000),
+	WebSocketServer = require('ws').Server,
+	wss = new WebSocketServer({server:app}),
+	userList = {};
 
 console.log('websocket server run at port 8000');
 
 wss.on('connection', function (conn) {
 
-	var key = conn.upgradeReq.headers['sec-websocket-key'];
-	var uid = '';
+	var key = conn.upgradeReq.headers['sec-websocket-key'],
+		uid = '';
 
 	console.log("conn", key);
 
@@ -29,11 +28,11 @@ wss.on('connection', function (conn) {
 
 		sendToAll(obj);
 
-	})
+	});
 
 	conn.on('error', function () {
 		console.log('onError', key);
-	})
+	});
 
 	conn.on('close', function () {
 
@@ -42,7 +41,7 @@ wss.on('connection', function (conn) {
 
 		console.log('close', key);
 
-	})
+	});
 
 	function addUser(key, uid) {
 
@@ -59,12 +58,13 @@ wss.on('connection', function (conn) {
 	}
 
 	function sendToAll(obj) {
-		
-		console.log(obj);
-		
-		for (var i = wss.clients.length - 1; i >= 0; i--) {
+
+		var i;
+		for (i = wss.clients.length - 1; i >= 0; i--) {
 			wss.clients[i].send(obj);
 		};
+
+		console.log(obj);
 
 	}
 

@@ -8,11 +8,11 @@ var url = 'ws://106.187.96.242:8000',
 			
 			ws.onmessage = function (msg) {
 				msgHandler(msg.data);
-			}
+			};
 			
 			ws.onclose = function () {
 				closeHandler();
-			}
+			};
 		},
 		
 		send : function (type, uid, value) {
