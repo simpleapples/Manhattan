@@ -167,29 +167,44 @@ containerMask.bind('mousewheel DOMMouseScroll', function(e) {
 
     _diff = _top + _diff;
 
-    if (_diff < 0) 
-        _diff = 0;
-    if (_diff > _height - scrollbar.height())
-        _diff = _height - scrollbar.height();
-
-    scrollbar.animate({
-        top: _diff + "px"
-    }, 20); // 20ms足够了，若太慢则会导致动画队列堵塞
+    changePositionOfBar(_diff);
 });
+
+function changePositionOfBar(dest) {
+    if (dest < 0) 
+        dest = 0;
+    if (dest > _height - scrollbar.height())
+        dest = _height - scrollbar.height();
+
+/*    scrollbar.animate({
+        top: dest + "px"
+    }, 20); // 20ms足够了，若太慢则会导致动画队列堵塞
+*/
+    scrollbar.css("top", dest + "px");
+
+}
+
+// 记录位置
+var pos = {};
 
 /*
  * 给滚动条添加点击和拖动事件
  * */
 scrollbar.bind("mousedown", function(e) {
     isDrag = true;
+    pos = {
+        y: e.pageY
+    };
 });
 
 /*
  * document 上绑定鼠标的移动事件
  * */
 $(document).bind("mousemove", function(e) {
+    var _diffY = e.pageY - pos.y;
+
     if (isDrag) {
-        console.log(e.pageX);
+        changePositionOfBar(_diffY);
     }
 });
 
