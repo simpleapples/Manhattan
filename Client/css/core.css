@@ -35,11 +35,16 @@
     float: left;
 }
 
-.message-container {
-    height: 291px;
-    height: 400px;
+.message-container-mask {
+    height: 420px;
     width: 100%;
+    position: relative;
     overflow: hidden;
+}
+
+.message-container {
+    position: absolute;
+    top: 0;
 }
 
 /*
@@ -85,7 +90,7 @@ a.warn-msg {
 }
 
 /*聊天信息头像显示*/
-.message-container .s-msg .photo img {
+.message-container-mask .s-msg .photo img {
     width: 42px;
     height: 42px;
     border-radius: 8px;
@@ -138,4 +143,27 @@ a.warn-msg {
 
 .txt {
     font-size: 12px;
+    word-break:break-all; 
+}
+
+/*滚动条样式*/
+.scroller-container {
+    position: absolute;
+    top: 0;
+    left: 221px;
+    width: 9px;
+    height: 100%;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+
+.scrollbar {
+    width: 6px;
+    top: 10px;
+    left: 1px;
+    height: 100px;
+    background: #eee;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 5px;
 }

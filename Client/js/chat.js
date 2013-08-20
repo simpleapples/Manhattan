@@ -1,0 +1,149 @@
+/*
+ * @created at 2013-08-20
+ * @author luofei
+ * */
+
+// 刚初始化的时候就对链接状态进行初始化 
+serverService.connect(connHandler, msgHandler, closeHandler);
+
+// 模拟的用户id
+var idx = location.href.indexOf('?uid='),
+    // 用户id
+    uid = (idx != -1) ? location.href.substring(idx + 5) : 0,
+    // 发送按钮
+    sendBtn = $("#send-btn"),
+    // 发送文本
+    txt = $("#msg"),
+    // 消息容器
+    container = $("div.message-container"),
+    //消息事件代理器
+    containerMask = $('div.message-container-mask'),
+    // 滚动条部分
+    scrollbar = $('div.scrollbar'),
+    // 消息遮罩高度
+    _height = 420;
+
+sendBtn.bind('click', function() {
+    sendMsg(txt.val());
+});
+
+txt.bind('keydown',function(e) {
+    var keyCode = e.keyCode || e.which;
+
+    if (keyCode == 13) {
+        sendMsg(txt.val());
+    }
+});
+
+/*
+ * @method 发送消息函数
+ * @param {String} str 发送的字符串
+ * */
+function sendMsg(str) {
+    serverService.send("CHAT", uid, str);
+    chatHandler(str);
+}
+
+/*
+ * @method 把接收到的消息追加到容器中
+ * @param {String} value 发送文本中的内容
+ * */
+function chatHandler(value) {
+    // 获取当前消息容器的高度
+    var _h = container.height(),
+        str = insertMsg(value),
+        _diff;
+
+    container.append(str);
+
+    _diff = container.height();
+
+    // 把最新的消息推上去
+    if (_diff > _height) {
+        container.animate({
+            top: -(_diff - _height) + "px"
+        });
+    }
+
+    // 发送后清空文本并获取焦点
+    txt.val('');
+    txt.focus();
+}
+
+/*
+ * @method 把接收到的消息文本封装成展示的样式
+ * @param {String} str 消息文本
+ * @return {String} str 封装成html源码格式的字符串
+ * */
+function insertMsg(str) {
+    var str = '<div class="s-msg">' +
+                '<a class="photo" href="">' + 
+                    '<img src="./img/photo.jpg" alt="" />' + 
+                '</a>' +
+                '<div class="txt-container">' +
+                    '<div class="txt">' +
+                        str +
+                    '</div>' +
+                    '<b class="to"></b>' +
+                '</div>' +
+               '</div>';
+
+    return str;
+}
+
+/*与服务器链接上的处理函数*/
+function connHandler() {
+    serverService.send("ONLI", uid);
+    console.log("connected!");
+}
+
+/*
+ * @method 接收到消息的消息处理函数
+ * @param {Object} data 服务器发送的json格式消息
+ * */
+function msgHandler(data) {
+    var msg = JSON.parse(data) || {};
+
+    if (msg.uid != uid)  {
+        switch(msg.type) {
+            case "ONLI":
+                break;
+            case "OFFL":
+                break;
+            case "CHAT":
+                chatHandler(msg.value);
+                break;
+            case "DRLI":
+                drawLineHandler(msg.value.x, msg.value.y);
+                break;
+            case "DRMV":
+                drawMoveHandler(msg.value.x, msg.value.y);
+                break;
+            case "DRCL":
+                drawCleanHandler();
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+/*
+ * @method 链接关闭触发的函数
+ * */
+function closeHandler() {
+    console.log("close!");
+}
+
+/*
+ * @method 为滚动条绑定滚动事件
+ * */
+containerMask.bind('mousewheel DOMMouseScroll', function(e) {
+    var _diff = (e.originalEvent.wheelDelta > 0) ? -30 : 30,
+        _top = scrollbar.css('top').replace('px', '') * 1;
+
+    _diff = _top + _diff + "px";
+    scrollbar.animate({
+        top: _diff
+    });
+});
