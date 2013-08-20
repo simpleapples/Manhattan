@@ -2,6 +2,7 @@
     width: 890px;
     margin: 0 auto;
     margin-top: 30px;
+    position: relative;
 }
 
 #ppt {
@@ -155,15 +156,45 @@ a.warn-msg {
     height: 100%;
     border: 1px solid #DDD;
     border-radius: 5px;
+    display: none;
 }
 
 .scrollbar {
     width: 6px;
-    top: 10px;
+    top: 0;
     left: 1px;
-    height: 100px;
     background: #eee;
     cursor: pointer;
     position: absolute;
     border-radius: 5px;
+}
+
+/*视频样式*/
+.video-container {
+    position: absolute;
+    border: 1px solid #eee;
+    top: 355px;
+    left: 480px
+}
+
+#video {
+    width: 160px;
+    height: 120px;
+}
+
+input.open-video {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    position: absolute;
+    top: 45px;
+    left: 30px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    display: none;
+}
+
+.video-container:hover input.open-video {
+    display: block;
 }

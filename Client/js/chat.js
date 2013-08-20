@@ -18,10 +18,14 @@ var idx = location.href.indexOf('?uid='),
     container = $("div.message-container"),
     //消息事件代理器
     containerMask = $('div.message-container-mask'),
+    // 滚动条容器
+    scrollbarContainer = $('div.scroller-container'),
     // 滚动条部分
     scrollbar = $('div.scrollbar'),
     // 消息遮罩高度
-    _height = 420;
+    _height = 420,
+    // 是否拖动滚动条
+    isDrag = false;
 
 sendBtn.bind('click', function() {
     sendMsg(txt.val());
@@ -40,8 +44,12 @@ txt.bind('keydown',function(e) {
  * @param {String} str 发送的字符串
  * */
 function sendMsg(str) {
-    serverService.send("CHAT", uid, str);
-    chatHandler(str);
+    if (str) {
+        serverService.send("CHAT", uid, str);
+        chatHandler(str);
+    } else {
+        txt.focus();
+    }
 }
 
 /*
@@ -60,6 +68,7 @@ function chatHandler(value) {
 
     // 把最新的消息推上去
     if (_diff > _height) {
+        changeScrollbarLen();
         container.animate({
             top: -(_diff - _height) + "px"
         });
@@ -136,14 +145,57 @@ function closeHandler() {
 }
 
 /*
+ * @method 根据消息容器的高度自动改变滚动条的高度
+ * */
+function changeScrollbarLen() {
+    var _len = container.height(),
+        _barLen = _height * _height / _len;
+
+    scrollbarContainer.css("display", "block");
+
+    scrollbar.height(_barLen);
+
+    scrollbar.css("top", _height - _barLen + "px");
+}
+
+/*
  * @method 为滚动条绑定滚动事件
  * */
 containerMask.bind('mousewheel DOMMouseScroll', function(e) {
     var _diff = (e.originalEvent.wheelDelta > 0) ? -30 : 30,
         _top = scrollbar.css('top').replace('px', '') * 1;
 
-    _diff = _top + _diff + "px";
+    _diff = _top + _diff;
+
+    if (_diff < 0) 
+        _diff = 0;
+    if (_diff > _height - scrollbar.height())
+        _diff = _height - scrollbar.height();
+
     scrollbar.animate({
-        top: _diff
-    });
+        top: _diff + "px"
+    }, 20); // 20ms足够了，若太慢则会导致动画队列堵塞
+});
+
+/*
+ * 给滚动条添加点击和拖动事件
+ * */
+scrollbar.bind("mousedown", function(e) {
+    isDrag = true;
+});
+
+/*
+ * document 上绑定鼠标的移动事件
+ * */
+$(document).bind("mousemove", function(e) {
+    if (isDrag) {
+        console.log(e.pageX);
+    }
+});
+
+/*
+ * document 上绑定鼠标的抬起事件
+ * */
+$(document).bind("mouseup", function() {
+    isDrag = false;
 });
