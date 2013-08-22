@@ -69,6 +69,7 @@ function chatHandler(value) {
     // 把最新的消息推上去
     if (_diff > _height) {
         changeScrollbarLen();
+        container.stop();
         container.animate({
             top: -(_diff - _height) + "px"
         });
@@ -155,7 +156,11 @@ function changeScrollbarLen() {
 
     scrollbar.height(_barLen);
 
-    scrollbar.css("top", _height - _barLen + "px");
+    //scrollbar.css("top", _height - _barLen + "px");
+    scrollbar.stop();
+    scrollbar.animate({
+        top: _height - _barLen + "px"
+    });
 }
 
 /*
@@ -170,16 +175,29 @@ containerMask.bind('mousewheel DOMMouseScroll', function(e) {
     changePositionOfBar(_diff);
 });
 
+// 防止聊天刷屏
+var preventFlushScreen = false;
+
+containerMask.bind("mouseover", function() {
+    preventFlushScreen = true;
+});
+
+containerMask.bind("mouseout", function() {
+    preventFlushScreen = false;
+});
+
 function changePositionOfBar(dest) {
+    var _cheight = container.height(),
+        _nextTop;
+
     if (dest < 0) 
         dest = 0;
     if (dest > _height - scrollbar.height())
         dest = _height - scrollbar.height();
 
-/*    scrollbar.animate({
-        top: dest + "px"
-    }, 20); // 20ms足够了，若太慢则会导致动画队列堵塞
-*/
+    _nextTop = -(_cheight - _height) * dest / (_height - scrollbar.height());
+
+    container.css("top", _nextTop);
     scrollbar.css("top", dest + "px");
 
 }
@@ -191,26 +209,35 @@ var pos = {};
  * 给滚动条添加点击和拖动事件
  * */
 scrollbar.bind("mousedown", function(e) {
+    e.stopPropagation = true;
     isDrag = true;
-    pos = {
-        y: e.pageY
-    };
+    pos.y = e.clientY;
 });
+
+document.onselectstart = function() {
+    return !isDrag;
+}
 
 /*
  * document 上绑定鼠标的移动事件
  * */
-$(document).bind("mousemove", function(e) {
-    var _diffY = e.pageY - pos.y;
+//$(document).bind("mousemove", function(e) {
+document.addEventListener("mousemove", function(e) {
+    e.stopPropagation();
+    var _diffY = e.clientY - pos.y;
+    _diffY += scrollbar.css("top").replace("px", "") * 1;
 
     if (isDrag) {
         changePositionOfBar(_diffY);
     }
-});
+
+    pos.y = e.clientY;
+}, true);
 
 /*
  * document 上绑定鼠标的抬起事件
  * */
-$(document).bind("mouseup", function() {
+$(document).bind("mouseup", function(e) {
+    e.stopPropagation = true;
     isDrag = false;
 });
