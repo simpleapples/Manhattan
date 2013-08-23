@@ -29,6 +29,9 @@ function msgHandler(data) {
             case "GOPV":
                 goPrevious();
                 break;
+            case "USLI":
+            	getUserListHandler(msg.value);
+            	break;
             default:
                 break;
         }
