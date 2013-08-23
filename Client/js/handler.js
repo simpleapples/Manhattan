@@ -72,7 +72,7 @@ function getUserListHandler(value) {
 }
 
 // 显示在线人数的对象
-var showNum = $("a.online-title");
+var showNum = $("span.online-title");
 
 /*
  * @method 获取最新的在线人数列表
