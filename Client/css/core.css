@@ -1,4 +1,4 @@
-#wrapper {
+﻿#wrapper {
     width: 890px;
     margin: 0 auto;
     margin-top: 30px;
@@ -192,7 +192,7 @@ a.warn-msg {
     position: absolute;
     border: 1px solid #eee;
     top: 355px;
-    left: 480px
+    left: 480px;
     z-index: 100;
 }
 

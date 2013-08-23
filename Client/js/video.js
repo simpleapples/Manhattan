@@ -1,7 +1,7 @@
 var videoBtn = document.getElementById("video-btn"),
 	isVideoOpen = false;
 
-rtc.connect('ws://106.187.96.242:8001');
+rtc.connect('ws://192.168.0.46:8001');
 
 rtc.on('add remote stream', function(stream){
 	console.log("add remote stream");
