@@ -34,3 +34,16 @@ function msgHandler(data) {
         }
     }
 }
+
+/*与服务器链接上的处理函数*/
+function connHandler() {
+    serverService.send("ONLI", uid);
+    console.log("connected!");
+}
+
+/*
+ * @method 链接关闭触发的函数
+ * */
+function closeHandler() {
+    console.log("close!");
+}

@@ -105,19 +105,6 @@ function insertMsg(value, isSender) {
     return str;
 }
 
-/*与服务器链接上的处理函数*/
-function connHandler() {
-    serverService.send("ONLI", uid);
-    console.log("connected!");
-}
-
-/*
- * @method 链接关闭触发的函数
- * */
-function closeHandler() {
-    console.log("close!");
-}
-
 /*
  * @method 根据消息容器的高度自动改变滚动条的高度
  * */

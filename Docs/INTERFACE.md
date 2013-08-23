@@ -17,4 +17,6 @@
 - DRMV 鼠标移动
 - DRLI 划线
 - DRCL 清屏
+- GONX PPT翻到下一页
+- GOPV PPT翻到上一页
 
