@@ -10,6 +10,8 @@
     height: 480px;
     float: left;
     border: 1px solid #ccc;
+    position: relative;
+    z-index: 10;
 }
 
 #pdf-reader {
@@ -19,6 +21,7 @@
     border: 1px solid #FF0000;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 .chat-container {
@@ -191,6 +194,7 @@ a.warn-msg {
     border: 1px solid #eee;
     top: 355px;
     left: 480px
+    z-index: 100;
 }
 
 #video {
