@@ -190,7 +190,6 @@ a.warn-msg {
 /*视频样式*/
 .video-container {
     position: absolute;
-    border: 1px solid #eee;
     top: 355px;
     left: 480px;
     z-index: 100;
