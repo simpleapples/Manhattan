@@ -76,35 +76,33 @@ function getUserListHandler(value) {
     //showNum.html(value + "人在线");
 }
 
-// 显示在线人数的对象
-$(function() {
+/*
+ * @method 获取最新的在线人数列表
+ * @param {int} value 在线的人数
+ * */
+function getUserCountHandler(value) {
     var showNum = $("#online-num");
+    console.log("vlaue is:" + value);
+    console.log("showNum:" + showNum);
+    showNum.html(value + "人在线");
+}
 
-    /*
-     * @method 获取最新的在线人数列表
-     * @param {int} value 在线的人数
-     * */
-    function getUserCountHandler(value) {
-        console.log("vlaue is:" + value);
-        console.log("showNum:" + showNum);
-        showNum.html(value + "人在线");
-    }
+/*
+ * @method 增加在线人数
+ * */
+function clientOnlineHandler() {
+    var showNum = $("#online-num");
+    var _now = showNum.html().replace("人在线", "") * 1;
+    _now += 1;
+    showNum.html(_now + "人在线");
+}
 
-    /*
-     * @method 增加在线人数
-     * */
-    function clientOnlineHandler() {
-        var _now = showNum.html().replace("人在线", "") * 1;
-        _now += 1;
-        showNum.html(_now + "人在线");
-    }
-
-    /*
-     * @method 减少在线人数
-     * */
-    function clientOfflineHandler() {
-        var _now = showNum.html().replace("人在线", "") * 1;
-        _now -= 1;
-        showNum.html(_now + "人在线");
-    }
-});
+/*
+ * @method 减少在线人数
+ * */
+function clientOfflineHandler() {
+    var showNum = $("#online-num");
+    var _now = showNum.html().replace("人在线", "") * 1;
+    _now -= 1;
+    showNum.html(_now + "人在线");
+}
