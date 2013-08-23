@@ -1,4 +1,4 @@
-var url = "http://192.168.0.68/ppt/ppt1.pdf";
+var url = "http://192.168.0.46/ppt/ppt1.pdf";
 PDFJS.disableWorker = true;
 
 var pdfDoc = null,
@@ -44,6 +44,7 @@ function goPrevious() {
   if (pageNum <= 1)
     return;
   pageNum--;
+  serverService.send("GOPV", uid, pageNum);
   renderPage(pageNum);
 }
 
@@ -54,6 +55,7 @@ function goNext() {
   if (pageNum >= pdfDoc.numPages)
     return;
   pageNum++;
+  serverService.send("GONX", uid, pageNum);
   renderPage(pageNum);
 }
 

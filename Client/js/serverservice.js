@@ -18,7 +18,7 @@ var url = 'ws://192.168.0.46:8000',
 		send : function (type, uid, value) {
 			var msg;
 			if (value) {
-				if (value.charAt(0) === "{") {
+				if (typeof(value) === "number" || value.charAt[0] === "{") {
 					msg = '{"type":"' + type + '", "uid":' + uid + ', "value":' + value + '}';
 				} else {
 					msg = '{"type":"' + type + '", "uid":' + uid + ', "value":"' + value + '"}';
@@ -27,6 +27,5 @@ var url = 'ws://192.168.0.46:8000',
 				msg = '{"type":"' + type + '", "uid":' + uid + '}';
 			}
 			ws.send(msg);
-			console.log(msg);
 		}
 	};
