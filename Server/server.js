@@ -35,9 +35,8 @@ wss.on('connection', function (conn) {
 	});
 
 	conn.on('close', function () {
-
-		removeUser(key);
 		sendToAll('{"type":"OFFL", "uid":' + userList[key] + '}');
+		removeUser(key);
 
 		console.log('close', key);
 
