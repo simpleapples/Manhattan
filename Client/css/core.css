@@ -184,7 +184,7 @@ a.warn-msg {
     background: #eee;
     cursor: pointer;
     position: absolute;
-    border-radius: 5px;
+;
 }
 
 /*视频样式*/

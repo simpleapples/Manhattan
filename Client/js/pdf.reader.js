@@ -4,19 +4,19 @@ PDFJS.disableWorker = true;
 var pdfDoc = null,
     pageNum = 1,
     scale = 1,
-    canvas = document.getElementById('pdf-reader'),
-    ctx = canvas.getContext('2d');
+    pptCanvas = document.getElementById('pdf-reader'),
+    pptCtx = pptCanvas.getContext('2d');
 
 function renderPage(num) {
   // Using promise to fetch the page
   pdfDoc.getPage(num).then(function(page) {
     var viewport = page.getViewport(scale);
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+    pptCanvas.height = viewport.height;
+    pptCanvas.width = viewport.width;
 
-    // Render PDF page into canvas context
+    // Render PDF page into pptCanvas context
     var renderContext = {
-      canvasContext: ctx,
+      canvasContext: pptCtx,
       viewport: viewport
     };
     page.render(renderContext);
