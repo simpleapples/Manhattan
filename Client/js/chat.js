@@ -46,7 +46,7 @@ txt.bind('keydown',function(e) {
 function sendMsg(str) {
     if (str) {
         serverService.send("CHAT", uid, str);
-        chatHandler(str);
+        chatHandler(str, true);
     } else {
         txt.focus();
     }
@@ -59,7 +59,7 @@ function sendMsg(str) {
 function chatHandler(value) {
     // 获取当前消息容器的高度
     var _h = container.height(),
-        str = insertMsg(value),
+        str = insertMsg(value, arguments[1]),
         _diff;
 
     container.append(str);
@@ -85,14 +85,18 @@ function chatHandler(value) {
  * @param {String} str 消息文本
  * @return {String} str 封装成html源码格式的字符串
  * */
-function insertMsg(str) {
-    var str = '<div class="s-msg">' +
-                '<a class="photo" href="">' + 
+function insertMsg(value, isSender) {
+    var str = '<div class="s-msg">';
+
+    if (isSender)
+        str = '<div class="s-msg right">';
+
+    str += '<a class="photo" href="">' + 
                     '<img src="./img/photo.jpg" alt="" />' + 
                 '</a>' +
                 '<div class="txt-container">' +
                     '<div class="txt">' +
-                        str +
+                        value +
                     '</div>' +
                     '<b class="to"></b>' +
                 '</div>' +

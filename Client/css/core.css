@@ -54,6 +54,7 @@
 .message-container {
     position: absolute;
     top: 0;
+    width: 221px;
 }
 
 /*
@@ -134,10 +135,9 @@ a.warn-msg {
 
 .txt-container {
     border: 1px solid #EEEEEE;
-    padding: 10px 10px;
+    padding: 10px 15px;
     display: inline-block;
-    min-width: 18px;
-    max-width: 140px;
+    max-width: 120px;
     margin-left: 10px;
     position: relative;
     border-radius: 5px;
