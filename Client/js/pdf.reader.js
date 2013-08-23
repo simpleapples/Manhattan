@@ -44,6 +44,7 @@ function goPrevious() {
   if (pageNum <= 1)
     return;
   pageNum--;
+  serverService.send("GOPV", uid, pageNum);
   renderPage(pageNum);
 }
 
@@ -54,6 +55,7 @@ function goNext() {
   if (pageNum >= pdfDoc.numPages)
     return;
   pageNum++;
+  serverService.send("GONX", uid, pageNum);
   renderPage(pageNum);
 }
 
