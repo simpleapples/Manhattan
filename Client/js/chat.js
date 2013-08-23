@@ -6,12 +6,10 @@
 // 刚初始化的时候就对链接状态进行初始化 
 serverService.connect(connHandler, msgHandler, closeHandler);
 
-// 模拟的用户id
-var idx = location.href.indexOf('?uid='),
-    // 用户id
-    uid = (idx != -1) ? location.href.substring(idx + 5) : 0,
     // 发送按钮
-    sendBtn = $("#send-btn"),
+var sendBtn = $("#send-btn"),
+    // url解析
+    urlMsg = parseUrl(window.location.href),
     // 发送文本
     txt = $("#msg"),
     // 消息容器
@@ -45,7 +43,7 @@ txt.bind('keydown',function(e) {
  * */
 function sendMsg(str) {
     if (str) {
-        serverService.send("CHAT", uid, str);
+        serverService.send("CHAT", urlMsg.uid, str);
         chatHandler(str, true);
     } else {
         txt.focus();

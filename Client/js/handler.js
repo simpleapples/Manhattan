@@ -5,7 +5,7 @@
 function msgHandler(data) {
     var msg = JSON.parse(data) || {};
 
-    if (msg.uid != uid)  {
+    if (msg.uid != urlMsg.uid)  {
         switch(msg.type) {
             case "ONLI":
                 break;
@@ -40,7 +40,10 @@ function msgHandler(data) {
 
 /*与服务器链接上的处理函数*/
 function connHandler() {
-    serverService.send("ONLI", uid);
+    var userInfo = '{"uid": '+ urlMsg.uid +', "uname": "' + urlMsg.uname +
+        '", "urole": ' + urlMsg.urole + ', "uavatar": "'+ urlMsg.uavatar +'"}';
+    console.log(userInfo);
+    serverService.send("ONLI", urlMsg.uid, userInfo);
     console.log("connected!");
 }
 
@@ -54,5 +57,11 @@ function closeHandler() {
 /*
  * @method 获取用户列表
  * */
-function getUserListHandler(msg) {
+function getUserListHandler(value) {
+    /*
+    console.log(msg);
+    var msg = JSON.parse(msg) || {},
+    */
+    //var showNum = $("a.online-title");
+    //showNum.html(value + "人在线");
 }
