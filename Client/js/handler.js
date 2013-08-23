@@ -77,13 +77,15 @@ function getUserListHandler(value) {
 }
 
 // 显示在线人数的对象
-var showNum = $("span.online-title");
+var showNum = $("#online-num");
 
 /*
  * @method 获取最新的在线人数列表
  * @param {int} value 在线的人数
  * */
 function getUserCountHandler(value) {
+    console.log("vlaue is:" + value);
+    console.log("showNum:" + showNum);
     showNum.html(value + "人在线");
 }
 
