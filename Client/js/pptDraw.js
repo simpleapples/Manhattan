@@ -1,7 +1,7 @@
 var drawCanvas = document.getElementById("ppt"),
     drawContext = drawCanvas.getContext('2d'),
     isDrawing = false,
-    canvasRect = canvas.getBoundingClientRect();
+    canvasRect = drawCanvas.getBoundingClientRect();
 
 drawCanvas.onmousedown = function (e) {
     isDrawing = true;
