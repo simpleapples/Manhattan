@@ -1,4 +1,4 @@
-var url = 'ws://192.168.0.68:8000',
+var url = 'ws://192.168.0.46:8000',
     ws = new WebSocket(url),
 	serverService = {
         connect : function (connHandler, msgHandler, closeHandler) {
