@@ -227,7 +227,7 @@ document.onselectstart = function() {
  * */
 //$(document).bind("mousemove", function(e) {
 document.addEventListener("mousemove", function(e) {
-    e.stopPropagation();
+    //e.stopPropagation();
     var _diffY = e.clientY - pos.y;
     _diffY += scrollbar.css("top").replace("px", "") * 1;
 
