@@ -21,7 +21,7 @@ wss.on('connection', function (conn) {
 		if (str.slice(13, 17) == 'ONLI') {
 			userInfo = str.slice(str.indexOf('value') + 8, str.length - 2);
 			addUser(key, userInfo);			
-			uid = str.slice(27, str.indexOf("value") - 4);
+			uid = str.slice(29, str.indexOf("value") - 4);
 			sendToClient(key, '{"type":"USLE", "uid":' + uid + ', "value":' + userCount + '}');
 		}
 
