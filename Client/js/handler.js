@@ -8,8 +8,10 @@ function msgHandler(data) {
     if (msg.uid != urlMsg.uid)  {
         switch(msg.type) {
             case "ONLI":
+                clientOnlineHandler();
                 break;
             case "OFFL":
+                clientOfflineHandler();
                 break;
             case "CHAT":
                 chatHandler(msg.value);
@@ -32,6 +34,9 @@ function msgHandler(data) {
             case "USLI":
             	getUserListHandler(msg.value);
             	break;
+            case "USLE":
+                getUserCountHandler(msg.value);
+                break;
             default:
                 break;
         }
