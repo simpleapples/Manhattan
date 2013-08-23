@@ -12,6 +12,15 @@
     border: 1px solid #ccc;
 }
 
+#pdf-reader {
+    position: absolute;
+    width: 640px;
+    height: 480px;
+    border: 1px solid #FF0000;
+    top: 0;
+    left: 0;
+}
+
 .chat-container {
     height: 480px;
     width: 230px;
