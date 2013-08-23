@@ -5,7 +5,17 @@ var pdfDoc = null,
     pageNum = 1,
     scale = 1,
     pptCanvas = document.getElementById('pdf-reader'),
-    pptCtx = pptCanvas.getContext('2d');
+    pptCtx = pptCanvas.getContext('2d'),
+    prevPage = $("a.page-prev"),
+    nextPage = $("a.page-next");
+
+prevPage.bind("click", function() {
+    goPrevious();
+});
+
+nextPage.bind("click", function() {
+    goNext();
+});
 
 function renderPage(num) {
   // Using promise to fetch the page
@@ -23,8 +33,8 @@ function renderPage(num) {
   });
 
   // Update page counters
-  //document.getElementById('page_num').textContent = pageNum;
-  //document.getElementById('page_count').textContent = pdfDoc.numPages;
+  document.getElementById('now-page').textContent = pageNum;
+  document.getElementById('total-page').textContent = pdfDoc.numPages;
 }
 
 //
