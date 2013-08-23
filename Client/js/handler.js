@@ -47,3 +47,9 @@ function connHandler() {
 function closeHandler() {
     console.log("close!");
 }
+
+/*
+ * @method 获取用户列表
+ * */
+function getUserListHandler(msg) {
+}
