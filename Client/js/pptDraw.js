@@ -9,7 +9,7 @@ drawCanvas.onmousedown = function (e) {
     drawContext.strokeStyle = "red"; 
     drawContext.lineWidth = 2;
     drawContext.moveTo(e.pageX - canvasRect.left, e.pageY - canvasRect.top);
-    serverService.send("DRMV", uid, '{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}');
+    serverService.send("DRMV", urlMsg.uid, '{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}');
     console.log("canvas down", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
 }
 
@@ -23,7 +23,7 @@ drawCanvas.onmousemove = function (e) {
     if (isDrawing) {
         drawContext.lineTo(e.pageX - canvasRect.left, e.pageY - canvasRect.top);
         drawContext.stroke();
-        serverService.send("DRLI", uid, '{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}');
+        serverService.send("DRLI", urlMsg.uid, '{"x":' + (e.pageX - canvasRect.left) + ', "y":' + (e.pageY - canvasRect.top) + '}');
         console.log("canvas move", e.pageX - canvasRect.left, e.pageY - canvasRect.top);
     }
 }

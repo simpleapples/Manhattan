@@ -3,6 +3,7 @@ var http = require('http'),
 	WebSocketServer = require('ws').Server,
 	wss = new WebSocketServer({server:app}),
 	userList = {};
+	userCount = 0;
 
 console.log('websocket server run at port 8000');
 
@@ -14,12 +15,14 @@ wss.on('connection', function (conn) {
 	console.log("conn", key);
 
 	conn.on('message', function (obj) {
-
-		var str = JSON.stringify(obj);
+		var str = JSON.stringify(obj),
+			userInfo = '';
 
 		if (str.slice(13, 17) == 'ONLI') {
-			uid = str.slice(28, str.length - 2);
-			addUser(key, uid);
+			userInfo = str.slice(str.indexOf('value') + 8, str.length - 2);
+			addUser(key, userInfo);			
+			uid = str.slice(29, str.indexOf("value") - 4);
+			sendToClient(key, '{"type":"USLE", "uid":' + uid + ', "value":' + userCount + '}');
 		}
 
 		if (str.slice(13, 17) == 'OFFL') {
@@ -27,7 +30,6 @@ wss.on('connection', function (conn) {
 		}
 
 		sendToAll(obj);
-
 	});
 
 	conn.on('error', function () {
@@ -35,36 +37,43 @@ wss.on('connection', function (conn) {
 	});
 
 	conn.on('close', function () {
-		sendToAll('{"type":"OFFL", "uid":' + userList[key] + '}');
+		sendToAll('{"type":"OFFL", "uid":' + userList[key].slice(9, userList[key].indexOf("uname") - 4) + ', "value":' + userList[key] + '}');
 		removeUser(key);
 
 		console.log('close', key);
-
 	});
 
-	function addUser(key, uid) {
-
-		userList[key] = uid;
-
+	function addUser(key, userInfo) {
+		userCount++;
+		userList[key] = userInfo;
 	}
 
 	function removeUser(key) {
-
+		userCount--;
 		if (userList[key]) {
 			delete userList[key];
 		}
+	}
 
+	function sendToClient(client, obj) {
+		var i;
+		for (i = wss.clients.length - 1; i >= 0; i--) {
+			if (wss.clients[i].upgradeReq.headers['sec-websocket-key'] == client) {
+				wss.clients[i].send(obj);
+				break;
+			}
+		};
+
+		console.log(obj);
 	}
 
 	function sendToAll(obj) {
-
 		var i;
 		for (i = wss.clients.length - 1; i >= 0; i--) {
 			wss.clients[i].send(obj);
 		};
 
 		console.log(obj);
-
 	}
 
 });

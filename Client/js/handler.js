@@ -5,8 +5,16 @@
 function msgHandler(data) {
     var msg = JSON.parse(data) || {};
 
-    if (msg.uid != urlMsg.uid)  {
+    if (msg.uid == urlMsg.uid)  {
         switch(msg.type) {
+        	case "USLE":
+                getUserCountHandler(msg.value);
+                break;
+            default:
+                break;
+        }
+    } else {
+    	switch(msg.type) {
             case "ONLI":
                 clientOnlineHandler();
                 break;
@@ -34,9 +42,6 @@ function msgHandler(data) {
             case "USLI":
             	getUserListHandler(msg.value);
             	break;
-            case "USLE":
-                getUserCountHandler(msg.value);
-                break;
             default:
                 break;
         }
@@ -94,7 +99,7 @@ function clientOnlineHandler() {
 /*
  * @method 减少在线人数
  * */
-function clientOnlineHandler() {
+function clientOfflineHandler() {
     var _now = showNum.html().replace("人在线", "") * 1;
     _now -= 1;
     showNum.html(_now + "人在线");
