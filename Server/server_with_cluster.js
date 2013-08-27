@@ -24,7 +24,7 @@ if (cluster.isMaster) {
 			var str = JSON.stringify(msg.cmd);
 			var userInfo = '';
 
-			if (str.slice(13, 17) == 'ONLI') {
+			if (str.slice(13, 17) === 'ONLI') {
 				userInfo = str.slice(str.indexOf('value') + 8, str.length - 2);
 				addUser(msg.key, userInfo);			
 				uid = str.slice(29, str.indexOf("value") - 4);
@@ -32,7 +32,7 @@ if (cluster.isMaster) {
 				return;
 			}
 
-			if (str.slice(13, 17) == 'OFFL') {
+			if (str.slice(13, 17) === 'OFFL') {
 				msg.cmd = '{"type":"OFFL", "uid":' + userList[msg.key].slice(9, userList[msg.key].indexOf("uname") - 4) + ', "value":' + userList[msg.key] + '}';
 				sendToWorker(msg.key, msg.cmd);
 				removeUser(msg.key);
@@ -44,7 +44,7 @@ if (cluster.isMaster) {
 	}
 
 	function sendToWorker(key, obj) {
-		Object.keys(cluster.workers).forEach(function(id) {
+		Object.keys(cluster.workers).forEach(function onSendToWorker(id) {
 			cluster.workers[id].send({key:key, cmd:obj});
 		});
 	}
@@ -53,12 +53,12 @@ if (cluster.isMaster) {
 		cluster.fork();
 	}
 
-	cluster.on('exit', function (worker, code, signal) {
+	cluster.on('exit', function onClusterExit(worker, code, signal) {
 		console.log('worker:' + worker.process.pid + ' died.');
 		cluster.fork();
 	});
 
-	Object.keys(cluster.workers).forEach(function(id) {
+	Object.keys(cluster.workers).forEach(function onClusterMessage(id) {
 		cluster.workers[id].on('message', messageHandler);
 	});
 
@@ -71,28 +71,28 @@ if (cluster.isMaster) {
 
 	console.log('websocket server run at port 8000. pid:' + process.pid);
 
-	process.on('message', function(msg) {
+	process.on('message', function onClientMessage(msg) {
 		if (msg.key && msg.cmd) {
 			sendToAll(msg.cmd);
 		}
 	});
 
-	wss.on('connection', function (conn) {
+	wss.on('connection', function onWebsocketConnect(conn) {
 
 		var key = conn.upgradeReq.headers['sec-websocket-key'];
 		var uid = '';
 
 		console.log("pid:" + process.pid + "conn:", key);
 
-		conn.on('message', function (obj) {
+		conn.on('message', function onWebsocketMessage(obj) {
 			process.send({key:key, cmd:obj});
 		});
 
-		conn.on('error', function () {
+		conn.on('error', function onWebsocketError() {
 			console.log('onError', key);
 		});
 
-		conn.on('close', function () {
+		conn.on('close', function onWebsocketClose() {
 			var obj = '{"type":"OFFL", "uid":0, "value":0}';
 			process.send({key:key, cmd:obj});
 			console.log('close', key);

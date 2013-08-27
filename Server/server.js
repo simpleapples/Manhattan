@@ -7,36 +7,36 @@ var http = require('http'),
 
 console.log('websocket server run at port 8000');
 
-wss.on('connection', function (conn) {
+wss.on('connection', function onWebsocketConnect(conn) {
 
 	var key = conn.upgradeReq.headers['sec-websocket-key'],
 		uid = '';
 
 	console.log("conn", key);
 
-	conn.on('message', function (obj) {
+	conn.on('message', function onWebsocketMessage(obj) {
 		var str = JSON.stringify(obj),
 			userInfo = '';
 
-		if (str.slice(13, 17) == 'ONLI') {
+		if (str.slice(13, 17) === 'ONLI') {
 			userInfo = str.slice(str.indexOf('value') + 8, str.length - 2);
 			addUser(key, userInfo);			
 			uid = str.slice(29, str.indexOf("value") - 4);
 			sendToClient(key, '{"type":"USLE", "uid":' + uid + ', "value":' + userCount + '}');
 		}
 
-		if (str.slice(13, 17) == 'OFFL') {
+		if (str.slice(13, 17) === 'OFFL') {
 			removeUser(key);
 		}
 
 		sendToAll(obj);
 	});
 
-	conn.on('error', function () {
+	conn.on('error', function onWebsocketError() {
 		console.log('onError', key);
 	});
 
-	conn.on('close', function () {
+	conn.on('close', function onWebsocketClose() {
 		sendToAll('{"type":"OFFL", "uid":' + userList[key].slice(9, userList[key].indexOf("uname") - 4) + ', "value":' + userList[key] + '}');
 		removeUser(key);
 
@@ -58,7 +58,7 @@ wss.on('connection', function (conn) {
 	function sendToClient(client, obj) {
 		var i;
 		for (i = wss.clients.length - 1; i >= 0; i--) {
-			if (wss.clients[i].upgradeReq.headers['sec-websocket-key'] == client) {
+			if (wss.clients[i].upgradeReq.headers['sec-websocket-key'] === client) {
 				wss.clients[i].send(obj);
 				break;
 			}
