@@ -6,28 +6,17 @@ if (cluster.isMaster) {
 
 	var userList = {};
 	var userCount = 0;
-	var userListModifyFlag = false;
 
-	function addUser(key, userInfo) {	
-		if (userListModifyFlag == true) {
-			userListModifyFlag = false;
-		}
-		userListModifyFlag = true;
+	function addUser(key, userInfo) {
 		userCount++;
 		userList[key] = userInfo;
-		userListModifyFlag = false;
 	}
 
 	function removeUser(key) {
-		if (userListModifyFlag == true) {
-			userListModifyFlag = false;		
-		}
-		userListModifyFlag = true;
 		userCount--;
 		if (userList[key]) {
 			delete userList[key];
 		}
-		userListModifyFlag = false;
 	}
 
 	function messageHandler(msg) {
@@ -108,20 +97,6 @@ if (cluster.isMaster) {
 			process.send({key:key, cmd:obj});
 			console.log('close', key);
 		});
-
-
-		// function sendToClient(client, obj) {
-		// 	var i;
-		// 	for (i = wss.clients.length - 1; i >= 0; i--) {
-		// 		if (wss.clients[i].upgradeReq.headers['sec-websocket-key'] == client) {
-		// 			wss.clients[i].send(obj);
-		// 			break;
-		// 		}
-		// 	};
-
-		// 	console.log(obj);
-		// }
-
 	});
 
 	function sendToAll(obj) {
