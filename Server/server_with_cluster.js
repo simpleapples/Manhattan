@@ -10,11 +10,7 @@ if (cluster.isMaster) {
 
 	function addUser(key, userInfo) {	
 		if (userListModifyFlag == true) {
-			while(1) {
-				if (userListModifyFlag == false) {
-					break;
-				}
-			}
+			userListModifyFlag = false;
 		}
 		userListModifyFlag = true;
 		userCount++;
@@ -24,11 +20,7 @@ if (cluster.isMaster) {
 
 	function removeUser(key) {
 		if (userListModifyFlag == true) {
-			while(1) {
-				if (userListModifyFlag == false) {
-					break;
-				}
-			}
+			userListModifyFlag = false;		
 		}
 		userListModifyFlag = true;
 		userCount--;
