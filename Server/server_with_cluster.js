@@ -48,10 +48,14 @@ if (cluster.isMaster) {
 				addUser(msg.key, userInfo);			
 				uid = str.slice(29, str.indexOf("value") - 4);
 				sendToWorker(msg.key, '{"type":"USLE", "uid":' + uid + ', "value":' + userCount + '}');
+				return;
 			}
 
 			if (str.slice(13, 17) == 'OFFL') {
+				msg.cmd = '{"type":"OFFL", "uid":' + userList[msg.key].slice(9, userList[msg.key].indexOf("uname") - 4) + ', "value":' + userList[msg.key] + '}';
+				sendToWorker(msg.key, msg.cmd);
 				removeUser(msg.key);
+				return;
 			}
 
 			sendToWorker(msg.key, msg.cmd);
@@ -108,7 +112,7 @@ if (cluster.isMaster) {
 		});
 
 		conn.on('close', function () {
-			var obj = '{"type":"OFFL", "uid":' + userList[key].slice(9, userList[key].indexOf("uname") - 4) + ', "value":' + userList[key] + '}';
+			var obj = '{"type":"OFFL", "uid":0, "value":0}';
 			process.send({key:key, cmd:obj});
 			console.log('close', key);
 		});
