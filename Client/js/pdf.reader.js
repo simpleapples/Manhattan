@@ -10,10 +10,12 @@ var pdfDoc = null,
     nextPage = $("a.page-next");
 
 prevPage.bind("click", function() {
+    serverService.send("GOPV", urlMsg.uid, pageNum);
     goPrevious();
 });
 
 nextPage.bind("click", function() {
+    serverService.send("GONX", urlMsg.uid, pageNum);
     goNext();
 });
 
@@ -44,7 +46,6 @@ function goPrevious() {
   if (pageNum <= 1)
     return;
   pageNum--;
-  serverService.send("GOPV", urlMsg.uid, pageNum);
   renderPage(pageNum);
 }
 
@@ -55,7 +56,6 @@ function goNext() {
   if (pageNum >= pdfDoc.numPages)
     return;
   pageNum++;
-  serverService.send("GONX", urlMsg.uid, pageNum);
   renderPage(pageNum);
 }
 
