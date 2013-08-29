@@ -90,7 +90,7 @@ function insertMsg(value, isSender) {
         str = '<div class="s-msg right">';
 
     str += '<a class="photo" href="">' + 
-                    '<img src="./img/photo.jpg" alt="" />' + 
+                    '<img src="./img/left.jpg" alt="" title="' + urlMsg.uname + '"/>' + 
                 '</a>' +
                 '<div class="txt-container">' +
                     '<div class="txt">' +
