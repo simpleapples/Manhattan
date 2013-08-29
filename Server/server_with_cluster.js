@@ -76,7 +76,7 @@ if (cluster.isMaster) {
 			sendToAll(msg.cmd);
 		}
 	});
-
+	
 	wss.on('connection', function onWebsocketConnect(conn) {
 
 		var key = conn.upgradeReq.headers['sec-websocket-key'];
