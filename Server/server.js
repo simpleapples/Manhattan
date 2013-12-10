@@ -2,7 +2,8 @@ var http = require('http'),
 	app = http.createServer().listen(8000),
 	WebSocketServer = require('ws').Server,
 	wss = new WebSocketServer({server:app}),
-	userList = {};
+    //wss = new ws.Server({server:app}),
+	userList = {},
 	userCount = 0;
 
 console.log('websocket server run at port 8000');
