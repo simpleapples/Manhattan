@@ -2,6 +2,10 @@
 
 基于Html5实现
 
+### Demo
+
+![Picture](./Client/img/demo.png)
+
 ### 项目结构
 
 - **Server** 存放与服务器交互的后台代码
