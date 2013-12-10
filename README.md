@@ -36,9 +36,9 @@
 
 ### 线下部署注意事项
 
-1. `node.js`版本最好1.0以上
+1.`node.js`版本最好1.0以上
 
-2. 启动服务器脚本的时候需要安装`ws`模块
+2.启动服务器脚本的时候需要安装`ws`模块
 
     $ sudo npm install -g ws # 安装到全局
 
@@ -46,13 +46,13 @@
     # 所以最好安装在local，或者用link软链接一下
     $ sudo npm link <ModuleName> # sudo npm link ws
 
-3. 需要apache环境的支持
+3.需要apache环境的支持
 
 把整个项目放到`www`或`htdocs`目录下,
 
 然后访问：[http://localhost/chat/Client](http://localhost/chat/Client)
 
-4. 目前的用户身份识别
+4.目前的用户身份识别
 
     {
         uid: 100, // 用户id
