@@ -1,4 +1,4 @@
-var url = 'ws://localhost:8000',
+var url = 'ws://manhattan-c9-luofei2011.c9.io',
     ws = new WebSocket(url),
 	serverService = {
         connect : function (connHandler, msgHandler, closeHandler) {
