@@ -8,8 +8,6 @@ serverService.connect(connHandler, msgHandler, closeHandler);
 
     // 发送按钮
 var sendBtn = $("#send-btn"),
-    // url解析
-    urlMsg = parseUrl(window.location.href),
     // 发送文本
     txt = $("#msg"),
     // 消息容器
@@ -42,9 +40,14 @@ txt.bind('keydown',function(e) {
  * @param {String} str 发送的字符串
  * */
 function sendMsg(str) {
+    var content = encodeURI(str);
     if (str) {
-        serverService.send("CHAT", urlMsg.uid, str);
-        chatHandler(str, true);
+        serverService.send("CHAT", {
+            uid: user.uid,
+            uname: user.uname,
+            uavatar: user.uavatar,
+            content: content
+        });
     } else {
         txt.focus();
     }
@@ -54,13 +57,14 @@ function sendMsg(str) {
  * @method 把接收到的消息追加到容器中
  * @param {String} value 发送文本中的内容
  * */
-function chatHandler(value) {
+function chatHandler(obj) {
     // 获取当前消息容器的高度
     var _h = container.height(),
-        str = insertMsg(value, arguments[1]),
+        _isSender = (obj.uid === user.uid ? true : false),
+        _item = insertMsg(obj.content, _isSender),
         _diff;
 
-    container.append(str);
+    container.append(_item);
 
     _diff = container.height();
 
@@ -84,23 +88,18 @@ function chatHandler(value) {
  * @return {String} str 封装成html源码格式的字符串
  * */
 function insertMsg(value, isSender) {
-    var str = '<div class="s-msg">';
+    var _item = $('<div class="s-msg"></div>'),
+        _con = $('<div class="txt-container"></div>'),
+        _txt = $('<div class="txt"></div>');
 
     if (isSender)
-        str = '<div class="s-msg right">';
+        _item.addClass('right');
 
-    str += '<a class="photo" href="">' + 
-                    '<img src="./img/left.jpg" alt="" title="' + urlMsg.uname + '"/>' + 
-                '</a>' +
-                '<div class="txt-container">' +
-                    '<div class="txt">' +
-                        value +
-                    '</div>' +
-                    '<b class="to"></b>' +
-                '</div>' +
-               '</div>';
-
-    return str;
+    _item.append('<a class="photo" href=""><img src="./img/left.jpg" alt="" title="' + user.uname + '"/></a>'); 
+    _txt.text(decodeURI(value));
+    _con.append(_txt).append('<b class="to"></b>');
+    _item.append(_con);
+    return _item;
 }
 
 /*

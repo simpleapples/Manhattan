@@ -7,6 +7,7 @@ var url = 'ws://manhattan-c9-luofei2011.c9.io',
 			};
 			
 			ws.onmessage = function (msg) {
+                //console.log('response', msg);
 				msgHandler(msg.data);
 			};
 			
@@ -15,17 +16,10 @@ var url = 'ws://manhattan-c9-luofei2011.c9.io',
 			};
 		},
 		
-		send : function (type, uid, value) {
-			var msg;
-			if (value) {
-				if (typeof(value) === "number" || value.charAt(0) === "{") {
-					msg = '{"type":"' + type + '", "uid":' + uid + ', "value":' + value + '}';
-				} else {
-					msg = '{"type":"' + type + '", "uid":' + uid + ', "value":"' + value + '"}';
-				}
-			} else {
-				msg = '{"type":"' + type + '", "uid":' + uid + '}';
-			}
-			ws.send(msg);
+		send : function (type, info) {
+			ws.send(JSON.stringify({
+                type: type,
+                data: info
+            }));
 		}
 	};

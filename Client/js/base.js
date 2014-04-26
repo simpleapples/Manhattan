@@ -1,16 +1,8 @@
-function parseUrl(url) {
-    // 找到url中的第一个?号
-    var parse = url.substring(url.indexOf("?") + 1),
-        params = parse.split("&"),
-        len = params.length,
-        i = 0,
-        item = [];
-        param = {};
-
-    for (; i < len; i++) {
-        item = params[i].split("=");
-        param[item[0]] = item[1];
-    }
-
-    return param;
-}
+/*
+ * 用户信息
+ * */
+var user = {
+        uname: '路人甲',
+        uavatar: ''
+    },
+    nickname = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸", "子", "丑", "寅", "卯", "辰", "已", "午", "未", "申", "酉", "戌", "亥"];
