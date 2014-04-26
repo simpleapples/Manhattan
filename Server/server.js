@@ -4,6 +4,7 @@ var http = require('http'),
 	wss = new WebSocketServer({server:app}),
     //wss = new ws.Server({server:app}),
 	userList = {},
+	uidIdx = 0,
 	userCount = 0;
 
 console.log('websocket server run at port ', process.env.PORT);
@@ -15,22 +16,37 @@ wss.on('connection', function onWebsocketConnect(conn) {
 
 	console.log("conn", key);
 
-	conn.on('message', function onWebsocketMessage(obj) {
-		var str = JSON.stringify(obj),
-			userInfo = '';
-
-		if (str.slice(13, 17) === 'ONLI') {
-			userInfo = str.slice(str.indexOf('value') + 8, str.length - 2);
-			addUser(key, userInfo);			
-			uid = str.slice(29, str.indexOf("value") - 4);
-			sendToClient(key, '{"type":"USLE", "uid":' + uid + ', "value":' + userCount + '}');
-		}
-
-		if (str.slice(13, 17) === 'OFFL') {
-			removeUser(key);
-		}
-
-		sendToAll(obj);
+	conn.on('message', function onWebsocketMessage(str) {
+		var data = JSON.parse(str);
+        
+        switch(data.type) {
+            case "ONLI":
+                addUser(key, {
+                    uid: uidIdx - 1,
+                    uname: data.data.uname,
+                    uavatar: data.data.uavatar
+                });
+                sendToClient(key, JSON.stringify({
+                    type: "INIT",
+                    uid: uidIdx - 1,
+                    value: userCount
+                }));
+                sendToAll(JSON.stringify({
+                    type: "ONLI",
+                    data: {
+                        unum: userCount,
+                        uname: data.data.uname,
+                        uavatar: data.data.uavatar
+                    }
+                }))
+                break;
+            case "OFFL":
+                removeUser(key);
+            default:
+                // 广播给所有用户
+                sendToAll(str);
+                break;
+        }
 	});
 
 	conn.on('error', function onWebsocketError() {
@@ -38,7 +54,7 @@ wss.on('connection', function onWebsocketConnect(conn) {
 	});
 
 	conn.on('close', function onWebsocketClose() {
-		sendToAll('{"type":"OFFL", "uid":' + userList[key].slice(9, userList[key].indexOf("uname") - 4) + ', "value":' + userList[key] + '}');
+		sendToAll('{"type":"OFFL", "uid":' + userList[key].uid);
 		removeUser(key);
 
 		console.log('close', key);
@@ -46,6 +62,8 @@ wss.on('connection', function onWebsocketConnect(conn) {
 
 	function addUser(key, userInfo) {
 		userCount++;
+		// 一直增加
+		uidIdx++;
 		userList[key] = userInfo;
 	}
 
