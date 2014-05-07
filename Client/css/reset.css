@@ -109,7 +109,7 @@ img {
 }
 .arrow{
     position: relative;
-    top: -2px;
+    top: 0px;
     left: 2px;
     border-width: 3px 3px 0;
     border-color: #666 transparent transparent transparent;

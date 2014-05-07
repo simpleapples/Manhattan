@@ -89,15 +89,17 @@ function chatHandler(obj) {
  * */
 function insertMsg(value, isSender) {
     var _item = $('<div class="s-msg"></div>'),
-        _con = $('<div class="txt-container"></div>'),
+        _con = $('<div class="r-container"></div>'),
         _txt = $('<div class="txt"></div>');
 
     if (isSender)
         _item.addClass('right');
+    else
+        _item.addClass('clearfix');
 
     _item.append('<a class="photo" href=""><img src="./img/left.jpg" alt="" title="' + user.uname + '"/></a>'); 
     _txt.text(decodeURI(value));
-    _con.append(_txt).append('<b class="to"></b>');
+    _con.append('<div class="u-nickname">'+user.uname+'</div>').append($('<div class="txt-container"></div>').append(_txt)).append('<b class="to"></b>');
     _item.append(_con);
     return _item;
 }
@@ -198,4 +200,24 @@ document.addEventListener("mousemove", function(e) {
 $(document).bind("mouseup", function(e) {
     e.stopPropagation = true;
     isDrag = false;
+});
+
+$('div.online-list a').on('click', function() {
+    $('div.u-list').toggle();
+    return false;
+});
+
+$('div.u-list').on('click', function() {
+    return false;
+});
+
+$(document).on('click', function(e) {
+    var _t = e.srcElement ? e.srcElement : e.target,
+        _node;
+
+    if (e.className !== 'u-list') {
+        _node = $('div.u-list');
+        if (_node.css('display') === 'block')
+            _node.hide();
+    }
 });

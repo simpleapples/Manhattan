@@ -14,7 +14,7 @@ function msgHandler(data) {
             clientOnlineHandler(msg.data);
             break;
         case "OFFL":
-            clientOfflineHandler();
+            clientOfflineHandler(msg.ulist);
             break;
         case "CHAT":
             chatHandler(msg.data);
@@ -74,15 +74,30 @@ function getUserListHandler(value) {
  * */
 function clientOnlineHandler(obj) {
     var showNum = $("#online-num");
-    showNum.html(obj.unum + "人在线");
+    showNum.html(obj.ulist.length + "人在线");
+    updateUserList(obj.ulist);
 }
 
 /*
  * @method 减少在线人数
  * */
-function clientOfflineHandler() {
+function clientOfflineHandler(list) {
     var showNum = $("#online-num");
-    var _now = showNum.html().replace("人在线", "") * 1;
-    _now -= 1;
-    showNum.html(_now + "人在线");
+    showNum.html(list.length + "人在线");
+    updateUserList(list);
+}
+
+/*
+ * 更新在线人数列表
+ * */
+function updateUserList(list) {
+    var i = 0, len = list.length,
+        _tNode = $('div.u-container'),
+        _src;
+
+    _tNode.empty();
+    for (; i < len; i++) {
+        _src = list.uavatar || './img/left.jpg';
+        _tNode.append('<img src="' + _src +'">');
+    }
 }
