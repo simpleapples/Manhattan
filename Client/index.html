@@ -13,10 +13,30 @@
 </head>
 <body>
 <div id="wrapper" class="clearfix"> 
-    <canvas id="ppt" width="640" height="480">
-        该版本不支持您的浏览器，请及时更新到最新版本！
-    </canvas>
-    <canvas id="pdf-reader"></canvas>
+    <div class="func-area">
+        <div class="func-item">
+            <button class="func-btn">导出图片</button>
+        </div>
+        <div class="func-item">
+            <button class="func-btn">打开视频</button>
+        </div>
+    </div>
+    <div class="main">
+        <canvas id="ppt" width="640" height="480">
+            该版本不支持您的浏览器，请及时更新到最新版本！
+        </canvas>
+        <canvas id="pdf-reader"></canvas>
+        <div class="video-container">
+            <video id="video" autoplay></video>
+            <input id="video-btn" type="button" class="open-video" value="打开视频" />
+        </div>
+        <div class="page">
+            <a class="page-prev" href="javascript:void(0);">上一页</a>
+            <a class="page-next" href="javascript:void(0);">下一页</a>
+            <span id="now-page">3</span> / 
+            <span id="total-page">19</span>
+        </div>
+    </div>
     <div class="chat-container">
         <div class="online-list">
             <a href="javascipt:void(0);">
@@ -41,16 +61,6 @@
             <input type="text" placeholder="在这里输入文字，进行聊天" name="msg" id="msg">
             <input type="button" value="发 送" id="send-btn" class="send">
         </div>
-    </div>
-    <div class="video-container">
-        <video id="video" autoplay></video>
-        <input id="video-btn" type="button" class="open-video" value="打开视频" />
-    </div>
-    <div class="page">
-        <a class="page-prev" href="javascript:void(0);">上一页</a>
-        <a class="page-next" href="javascript:void(0);">下一页</a>
-        <span id="now-page">3</span> / 
-        <span id="total-page">19</span>
     </div>
 </div>
 <script type="text/javascript" src="./js/chat.js"></script>

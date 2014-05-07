@@ -129,7 +129,8 @@ containerMask.bind('mousewheel DOMMouseScroll', function(e) {
 
     _diff = _top + _diff;
 
-    changePositionOfBar(_diff);
+    if (container.height() > $(this).height())
+        changePositionOfBar(_diff);
 });
 
 // 防止聊天刷屏

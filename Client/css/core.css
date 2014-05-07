@@ -1,26 +1,43 @@
 ﻿#wrapper {
-    width: 890px;
+    width: 1120px;
     margin: 0 auto;
     margin-top: 30px;
     position: relative;
 }
 
+div {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.main {
+    position: relative;
+    float: left;
+    margin-left: 10px;
+}
+
 #ppt {
     width: 640px;
     height: 480px;
-    float: left;
     border: 1px solid #ccc;
-    position: relative;
+    position: absolute;
+    top: 0,
+    left: 0;
     z-index: 10;
+    cursor: url('../img/pen.ico'), pointer;
 }
 
 #pdf-reader {
-    position: absolute;
+    position: relative;
     width: 640px;
     height: 480px;
-    top: 0;
-    left: 0;
     z-index: 1;
+}
+
+.page {
+    position: absolute;
+    left: 0;
 }
 
 .chat-container {
@@ -215,4 +232,29 @@ input.open-video {
 
 .video-container:hover input.open-video {
     display: block;
+}
+
+/*功能区*/
+.func-area {
+    float: left;
+    width: 230px;
+    height: 480px;
+    border: 1px solid #ccc;
+}
+
+.func-item {
+    padding: 10px 20px;
+}
+.func-btn {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    background: #f2f2f2;
+}
+.func-btn:hover {
+    border: 1px solid #ff9b01;
+    background: #ff9b01;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
 }

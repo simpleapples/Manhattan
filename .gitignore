@@ -1,4 +1,4 @@
-*.swq
+*.swp
 *.swo
 *.~
 /Server/node_modules/
