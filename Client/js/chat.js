@@ -61,7 +61,7 @@ function chatHandler(obj) {
     // 获取当前消息容器的高度
     var _h = container.height(),
         _isSender = (obj.uid === user.uid ? true : false),
-        _item = insertMsg(obj.content, _isSender),
+        _item = insertMsg(obj, _isSender),
         _diff;
 
     container.append(_item);
@@ -87,7 +87,7 @@ function chatHandler(obj) {
  * @param {String} str 消息文本
  * @return {String} str 封装成html源码格式的字符串
  * */
-function insertMsg(value, isSender) {
+function insertMsg(o, isSender) {
     var _item = $('<div class="s-msg"></div>'),
         _con = $('<div class="r-container"></div>'),
         _txt = $('<div class="txt"></div>');
@@ -97,9 +97,9 @@ function insertMsg(value, isSender) {
     else
         _item.addClass('clearfix');
 
-    _item.append('<a class="photo" href=""><img src="./img/left.jpg" alt="" title="' + user.uname + '"/></a>'); 
-    _txt.text(decodeURI(value));
-    _con.append('<div class="u-nickname">'+user.uname+'</div>').append($('<div class="txt-container"></div>').append(_txt)).append('<b class="to"></b>');
+    _item.append('<a class="photo" href=""><img src="./img/left.jpg" alt="" title="' + o.uname + '"/></a>'); 
+    _txt.text(decodeURI(o.content));
+    _con.append('<div class="u-nickname">'+o.uname+'</div>').append($('<div class="txt-container"></div>').append(_txt)).append('<b class="to"></b>');
     _item.append(_con);
     return _item;
 }
@@ -220,4 +220,57 @@ $(document).on('click', function(e) {
         if (_node.css('display') === 'block')
             _node.hide();
     }
+});
+
+// 清屏事件的处理
+$('.chat-container').hover(function() {
+    $('.clear-ct').toggle();
+});
+$('.clear-ct').on('click', function() {
+    var $mc = $('.message-container'),
+        // 滚动条实体
+        $sobar = $('.scroller-container');
+
+    $mc.empty().css('top', 0);
+    $sobar.hide();
+});
+
+// 表情插件相关
+$('#face-icon').on('click', function() {
+    var _off = $(this).offset(),
+        $con = $('.chat-face');
+
+    if ($con.css('display') === "none") {
+        $con.css({
+            left: _off.left + $(this).outerWidth() / 2 - $con.outerWidth() / 2 - 8,
+            top: _off.top - 250 - 8
+        }).show();
+    } else {
+        $con.hide();
+    }
+
+    return false;
+});
+
+// 表情后台加载
+$(function() {
+    $face = $('.chat-face'),tmp = "";
+
+    for (var i = 0, len = faces_list.length; i < len; i++) {
+        tmp = "<img src='" + faces_list[i].icon + "' alt='" + faces_list[i].value.replace(/[\[\]]/g, '') + "' title='" + faces_list[i].value.replace(/[\[\]]/g, '') + "'>";
+
+        $face.append(tmp);
+        tmp = "";
+    }
+});
+
+// 表情事件相关
+$('.chat-face').on('click', function() {
+    // 取得表情
+
+    // 阻止事件冒泡
+    return false;
+});
+$(document).on('click', function() {
+    $('.chat-face').hide();
 });

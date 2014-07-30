@@ -9,6 +9,7 @@ function msgHandler(data) {
         // 初始化用户id
         case "INIT":
             user.uid = msg.uid;
+            user.uname = msg.uname;
             break;
         case "ONLI":
             clientOnlineHandler(msg.data);
@@ -18,6 +19,7 @@ function msgHandler(data) {
             break;
         case "CHAT":
             chatHandler(msg.data);
+            //console.log(msg.data);
             break;
         case "DRLI":
             if (msg.data.uid !== user.uid)
@@ -97,7 +99,7 @@ function updateUserList(list) {
 
     _tNode.empty();
     for (; i < len; i++) {
-        _src = list.uavatar || './img/left.jpg';
-        _tNode.append('<img src="' + _src +'">');
+        _src = list[i].uavatar || './img/left.jpg';
+        _tNode.append('<img src="' + _src +'" title="'+ list[i].uname +'">');
     }
 }

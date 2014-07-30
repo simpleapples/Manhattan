@@ -2,3 +2,4 @@
 *.swo
 *.~
 /Server/node_modules/
+/ppt
