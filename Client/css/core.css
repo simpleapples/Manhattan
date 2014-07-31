@@ -211,6 +211,10 @@ a.warn-msg {
     font-size: 12px;
     word-break:break-all; 
 }
+/*聊天信息中的图片样式*/
+.txt img {
+    margin: 0 3px;
+}
 
 /*滚动条样式*/
 .scroller-container {
