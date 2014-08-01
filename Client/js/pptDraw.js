@@ -58,3 +58,16 @@ function drawMoveHandler(pos) {
 function drawCleanHandler() {
     drawContext.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+// 下载图片功能
+$('.pic-import').on('click', function() {
+    // 替换BASE64的图像数据，然后通过URL进行下载
+    var _dImage = drawCanvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
+    //window.location.href = _dImage;
+
+    var $_a = $(this).find('a');
+
+    $_a.attr('download', 'download_' + (+ new Date()) + '.png');
+
+    $_a.attr('href', _dImage);
+});

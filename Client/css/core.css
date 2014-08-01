@@ -1,4 +1,8 @@
-﻿#wrapper {
+﻿body {
+    background: url(../img/bg_sky.jpg) 50% 50%;
+    background-size: cover;
+}
+#wrapper {
     width: 1200px;
     margin: 0 auto;
     margin-top: 30px;
@@ -18,6 +22,7 @@ div {
 }
 
 #ppt {
+    background: rgba(0, 0, 0, .4);
     width: 640px;
     height: 480px;
     border: 1px solid #ccc;
@@ -49,6 +54,8 @@ div {
     -webkit-border-radius: 5px;
     position: relative;
     background: rgba(255, 255, 255, 0.4);
+    /*background: url(../img/bg_r.jpg) no-repeat;*/
+    background-size: cover;
     margin-left: 10px;
     display: inline-block;
     float: left;
@@ -175,6 +182,7 @@ a.warn-msg {
 }
 
 .txt-container {
+    background: #fff;
     border: 1px solid #EEEEEE;
     padding: 10px 15px;
     display: inline-block;
@@ -231,7 +239,7 @@ a.warn-msg {
 .scrollbar {
     width: 6px;
     top: 0;
-    left: 1px;
+    left: 0;
     background: #eee;
     cursor: pointer;
     position: absolute;
@@ -386,4 +394,16 @@ input.open-video {
 .arrow-down ins {
     border-top-color: #fff;
     bottom: -15px;
+}
+.pic-import {
+    padding: 0;
+}
+.pic-import a {
+    display: block;
+    padding: 10px;
+    color: #000;
+}
+.pic-import a:hover {
+    text-decoration: none;
+    color: #fff;
 }

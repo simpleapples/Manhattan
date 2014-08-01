@@ -77,6 +77,7 @@ if (navigator.webkitGetUserMedia) {
 
   // Holds the STUN/ICE server to use for PeerConnections.
   rtc.SERVER = function() {
+    /*
     if (navigator.mozGetUserMedia) {
       return {
         "iceServers": [{
@@ -88,6 +89,15 @@ if (navigator.webkitGetUserMedia) {
       "iceServers": [{
         "url": "stun:stun.l.google.com:19302"
       }]
+    };
+    */
+    // FIXBUG by luofei
+    return {
+        iceServers: [
+            {url: 'stun:23.21.150.121'},
+            {url: 'stun:stun.l.google.com:19302'},
+            {url: 'turn:numb.viagenie.ca', credential: 'webrtcdemo', username: 'louis%40mozilla.com'}
+        ]
     };
   };
 
@@ -268,6 +278,7 @@ if (navigator.webkitGetUserMedia) {
           }
         }));
       }
+      // TODO chrome上会收到众多的candidates；所以是否需要清空该事件
       rtc.fire('ice candidate', event.candidate);
     };
 
@@ -397,7 +408,8 @@ if (navigator.webkitGetUserMedia) {
       element.mozSrcObject = stream;
       element.play();
     } else {
-      element.src = webkitURL.createObjectURL(stream);
+      // FIXBUG 此处应该是作者写错了 webkitURL -> URL
+      element.src = URL.createObjectURL(stream);
     }
   };
 
